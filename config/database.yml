@@ -1,0 +1,16 @@
+default: &default
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: adtech_development
+
+test:
+  <<: *default
+  database: adtech_test
+
+production:
+  <<: *default
+  database: adtech_production
