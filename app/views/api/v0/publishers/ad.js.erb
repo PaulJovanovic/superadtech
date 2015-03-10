@@ -2,43 +2,41 @@
   var wrapper = document.createElement("div");
   wrapper.style.overflow = "hidden";
   wrapper.style.height = "0px";
-  var square = document.createElement("div");
-  square.style.width = "300px";
-  square.style.height = "250px";
+  var square = document.createElement("img");
+  square.src = "<%= @ad.image %>";
+  square.style.height = "auto";
   square.style.margin = "auto";
-  square.style.backgroundImage = "url('http://www.adsthatwow.com/image/Audi_expandable.jpg')";
-  square.style.color = "#666666";
-  square.appendChild(document.createTextNode("<%= @publisher.name %>'s Ad Unit"));
+  square.style.display =  "block";
+  square.style.maxWidth = "100%";
   wrapper.appendChild(square);
   document.getElementById("jovatech-widget").appendChild(wrapper);
 
   var scroll = function() {
     var winW = 630, winH = 460;
     if (document.body && document.body.offsetWidth) {
-     winW = document.body.offsetWidth;
-     winH = document.body.offsetHeight;
+      winW = document.body.offsetWidth;
+      winH = document.body.offsetHeight;
     }
     if (document.compatMode=='CSS1Compat' &&
         document.documentElement &&
         document.documentElement.offsetWidth ) {
-     winW = document.documentElement.offsetWidth;
-     winH = document.documentElement.offsetHeight;
+      winW = document.documentElement.offsetWidth;
+      winH = document.documentElement.offsetHeight;
     }
     if (window.innerWidth && window.innerHeight) {
-     winW = window.innerWidth;
-     winH = window.innerHeight;
+      winW = window.innerWidth;
+      winH = window.innerHeight;
     }
     var wrapperTop = wrapper.getBoundingClientRect().top;
-    var percent = 1 - (wrapperTop / winH);
-    wrapperHeightMin = 10;
-    wrapperHeightMax = 250;
-    // height = (Math.min(Math.max(percent - 0.35, 0), 0.25)) / 0.25 * wrapperHeightMax;
+    var wrapperHeightMax = square.offsetHeight;
     var height = 0;
-    if (percent > 0.35) {
-      var height = Math.min((winH * 0.65 - wrapperTop), wrapperHeightMax);
+    var widgetHeight = (winH + wrapperHeightMax) / 2 - wrapperTop;
+    if (widgetHeight > 0) {
+      height = Math.min(widgetHeight, wrapperHeightMax);
     }
     wrapper.style.height = height + "px";
   };
   scroll();
   global.onscroll = scroll;
 })(this);
+
